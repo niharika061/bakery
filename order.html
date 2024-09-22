@@ -1,0 +1,252 @@
+<html>
+
+<head>
+    <title>Cake Bakery</title>
+    <link rel="shortcut icon" type="image" href="./image/logo.png" />
+    <link rel="stylesheet" href="style.css" />
+    <!-- bootstrap links -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+    </script>
+    <!-- bootstrap links -->
+    <style>
+
+    </style>
+</head>
+
+<body style="background-image: linear-gradient(rgba(0,0,0,0.8),rgba(0,0,0,0.8)), url(./image/background2.png);">
+
+    <div class="comtainer-fluid">
+        <h5 style="margin-left: 48%;"><a href="file:///C:/Users/ftt/Desktop/bakery/bakery.html"><img
+                    src="https://cdn-icons-png.flaticon.com/512/25/25694.png" width="30px"></a></h5>
+        <div class="row">
+            <div class="container">
+                <div class="col-sm-12 col-lg-8 offset-lg-2">
+                    <h1 class="mt-5" style="
+                color: white;
+               font-family: cursive;">
+                        Place Order For Delicious Cake 🎂
+                    </h1>
+                </div>
+                <div class="col-sm-12 col-lg-9 offset-lg-1">
+                    <input type="text" placeholder="Enter Name" id="name" class="form-control mt-5"
+                        style="font-size: 20px;" />
+                    <input type="number" placeholder="Enter Number" id="number" class="form-control mt-3"
+                        style="font-size: 20px; ">
+
+                    <input type="email" placeholder="Enter Email" id="mail" class="form-control mt-3"
+                        style="font-size: 20px;">
+                    <input type="text" placeholder="Enter Full Address with Zip Code" id="add" class="form-control mt-3"
+                        style="font-size: 20px;">
+                    <select id="cakeoption" class="mt-3">
+                        <option value="option">Select Cake flavour</option>
+                        <option value="Chocolate Cake">Chocolate Cake</option>
+                        <option value="Vanilla Cake">Vanilla Cake</option>
+                        <option value="Straberry Cake">Straberry</option>
+                        <option value="Red Velvet Cake">Red Valvet Cake</option>
+                    </select>
+                    <select id="pound" class="mt-3">
+                        <option value="option">Select Cake Size</option>
+                        <option value="250">1 Pound(Rs.250)</option>
+                        <option value="350">2 Pound(Rs.350)</option>
+                        <option value="450">3 Pound(Rs.450)</option>
+                        <option value="550">4 Pound(Rs.550)</option>
+                    </select>
+                    <select id="qty" class="mt-3">
+                        <option value="Quantity">Select Quantity</option>
+                        <option value="1">1 qty</option>
+                        <option value="2">2 qty</option>
+                        <option value="3">3 qty</option>
+                        <option value="4">4 qty</option>
+                    </select>
+                    <select id="method" class="mt-3">
+                        <option value="Payment Method">Payment Method</option>
+                        <option value="cash on deliver">Cash on Delivery</option>
+                        <option value="Credit/Debit Cards">Credit/Debit Cards</option>
+                        <option value="UPI">UPI</option>
+
+                    </select>
+                    <input type="text" placeholder="What Name to write on the Cake" id="cname" class="form-control mt-3"
+                        style="font-size: 20px;">
+                    <h4 class="mt-5"
+                        style="color: white; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+                        If you want to any specific design of cake you also uploaded image of cake below:</h4>
+                    <input type="file" id="cakeimg" class="mt-3"><br><br>
+                    <input type="button" value="Confirm Order" id="butt" onclick="submit()" class="btn btn-info">
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    </div>
+    <div class="col-lg-10 offset-lg-1">
+        <table class="table mt-5" style="font-size: 20px">
+            <thead>
+                <tr>
+                    <th style="color: white;">Name</th>
+                    <th style="color: white;">Number</th>
+                    <th style="color: white;">Email</th>
+                    <th style="color: white;">Address</th>
+                    <th style="color: white;">Flavour</th>
+                    <th style="color: white;">Size</th>
+                    <th style="color: white;">Quantity</th>
+                    <th style="color: white;">Payment Method</th>
+                    <th style="color: white;">Name on Cake</th>
+                    <th style="color: white;">Image</th>
+                    <th style="color: white;">Delivery Charge</th>
+                    <th style="color: white;">Total Bill</th>
+                </tr>
+            </thead>
+            <tbody id="table" style="color: white;">
+
+            </tbody>
+        </table>
+    </div>
+    </div>
+
+    <!--Script Start-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
+
+    <script>
+        order = [];
+        function submit() {
+            if (validate()) {
+                var obj = {
+                    name1: document.getElementById("name").value,
+                    num: +document.getElementById("number").value,
+                    mail: document.getElementById("mail").value,
+                    add: document.getElementById("add").value,
+                    option: document.getElementById("cakeoption").value,
+                    siz: document.getElementById("pound").value,
+                    qtty: document.getElementById("qty").value,
+                    method: document.getElementById("method").value,
+                    cakename: document.getElementById("cname").value,
+                    cakeimg: document.getElementById("cakeimg").files[0]
+                };
+                order.push(obj);
+                localStorage.setItem("cake-order", JSON.stringify(order));
+                show();
+                clear();
+            }
+        }
+        function validate() {
+            var a = document.getElementById("name").value;
+            var n = document.getElementById("number").value;
+            var m = document.getElementById("mail").value;
+            var ad = document.getElementById("add").value;
+            var o = document.getElementById("cakeoption").value;
+            var p = document.getElementById("pound").value;
+            var q = document.getElementById("qty").value;
+            var me = document.getElementById("method").value;
+            var cn = document.getElementById("cname").value;
+            var atpos = m.indexOf("@");
+            var dpos = m.indexOf(".");
+
+            if (a === "" || n === "" || m === "" || ad === "" || o === "" || q === "" || p === "" || me === "" || cn === "") {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Please fill all the fields.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+                return false;
+            }
+            if (n.length !== 10) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Please Enter 10 digit Mobile Number',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+                return false;
+            }
+            if (atpos === -1 || atpos < 1 || dpos === -1 || dpos - atpos < 3 || dpos + 1 === m.length) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Please Enter Valid Email Id',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+                return false;
+            }
+            else{
+                Swal.fire({
+                    title: 'Success',
+                    text: 'Successfully Submited',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
+
+                return true;
+            }
+             // Add this return statement
+        }
+        function show() {
+    let table = document.getElementById("table");
+    table.innerHTML = ""; // Clear existing rows
+    let deliveryCharge = 100; // Example delivery charge
+    for (let i = 0; i < order.length; i++) {
+        let ord = order[i];
+        let row = table.insertRow();
+        
+        // Populate table cells with order details
+        row.insertCell(0).innerText = ord.name1;
+        row.insertCell(1).innerText = ord.num;
+        row.insertCell(2).innerText = ord.mail;
+        row.insertCell(3).innerText = ord.add;
+        row.insertCell(4).innerText = ord.option;
+        row.insertCell(5).innerText = ord.siz;
+        row.insertCell(6).innerText = ord.qtty;
+        row.insertCell(7).innerText = ord.method;
+        row.insertCell(8).innerText = ord.cakename;
+
+        // Display image if available
+        let c9 = row.insertCell(9);
+        if (ord.cakeimg) {
+            let img = document.createElement("img");
+            img.src = URL.createObjectURL(ord.cakeimg);
+            img.width = 100;
+            img.height = 100;
+            c9.appendChild(img);
+        } else {
+            c9.innerText = "No Image";
+        }
+
+        // Assuming delivery charge is fixed for now
+        row.insertCell(10).innerText = deliveryCharge;
+        
+        // Calculate total cost
+        let total = calculateTotal(ord.siz, ord.qtty) + deliveryCharge;
+        row.insertCell(11).innerText = total;
+    }
+}
+function calculateTotal(size, quantity) {
+    let sizeCost = parseInt(size, 10); // Convert size to integer cost
+    return sizeCost * quantity+100; // Total cost = size cost * quantity
+}
+
+function clear() {
+    document.getElementById("name").value = "";
+    document.getElementById("number").value = "";
+    document.getElementById("mail").value = "";
+    document.getElementById("add").value = "";
+    document.getElementById("cakeoption").selectedIndex = 0;
+    document.getElementById("pound").selectedIndex = 0;
+    document.getElementById("qty").selectedIndex = 0;
+    document.getElementById("method").selectedIndex = 0;
+    document.getElementById("cname").value = "";
+    document.getElementById("cakeimg").value = "";
+}
+window.onload = function () {
+            var storedData = localStorage.getItem("cake-order");
+            if (storedData) {
+                order = JSON.parse(storedData);
+                show();
+            }
+        }
+
+    </script>
+</body>
+
+</html>
